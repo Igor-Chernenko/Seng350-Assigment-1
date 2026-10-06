@@ -41,9 +41,11 @@ public class Client
                     break;
                 }
 
-                printer.printString(username + ":" + hostname + ":" + message);
-            }
+                // Reply is the number of milliseconds the server spent processing. E.g., 23.013221
+                String reply = printer.printString(username + ":" + hostname + ":" + message);
 
+                System.out.println(reply);
+            }
             scanner.close();
         }
     }
