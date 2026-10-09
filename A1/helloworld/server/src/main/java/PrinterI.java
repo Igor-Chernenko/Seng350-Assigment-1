@@ -5,12 +5,13 @@ public class PrinterI implements Demo.Printer
         // Input processing start time
         long startTime = System.nanoTime();
 
+        int finalVal = 0;
         // fibonacci logic
         try {
 		    String[] parts = s.split(":");
 	    	int num = Integer.parseInt(parts[2]);
-    		int finalVal = fib(num);
-            System.out.println(parts[0] + ":" + parts[1] + ":" + finalVal);
+            System.out.print(parts[0] + ":" + parts[1] + ":");
+    		finalVal = fib(num);
 	    } catch (NumberFormatException nfe) {
 	    	System.out.println(s);
     	}
@@ -20,14 +21,19 @@ public class PrinterI implements Demo.Printer
         // Execution time in milliseconds
         double executionTimeMillis = (endTime - startTime) / 1_000_000.0;
 
-        System.out.println("Server Service Execution Time: " + executionTimeMillis);
 
-        return String.valueOf(executionTimeMillis);
+        System.out.println("\nServer Service Execution Time: " + executionTimeMillis);
+
+        return String.valueOf(executionTimeMillis) + ":" + String.valueOf(finalVal);
 
     }
 
 
     public static int fib(int n) {
+        if (n <= 0){
+            System.out.print(n);
+        }
+
         int oldVal = 0;
         int newVal = 1;
 
@@ -35,6 +41,7 @@ public class PrinterI implements Demo.Printer
             int temp = newVal;
             newVal = temp + oldVal;
             oldVal = temp;
+            System.out.print(oldVal + " ");
         }
 
         return oldVal;
