@@ -45,33 +45,31 @@ public class Client
                     break;
                 }
 
-                // Method invocation start time
-                long startTime = System.nanoTime();
+                for (int i=0; i<8; i++){
+                    // Method invocation start time
+                    long startTime = System.nanoTime();
 
-                // Reply is the number of milliseconds the server spent processing. E.g., 23.013221
-                String reply = printer.printString(username + ":" + hostname + ":" + message);
+                    // Reply is the number of milliseconds the server spent processing. E.g., 23.013221
+                    String reply = printer.printString(username + ":" + hostname + ":" + message);
 
-                for (int i=0; i<7; i++){
-                    reply = printer.printString(username + ":" + hostname + ":" + message);
-                }   // Call 7 more times, all with the same number
+                    // Responce receive time
+                    long endTime = System.nanoTime();
 
-                // Responce receive time
-                long endTime = System.nanoTime();
+                    String[] replyPart = reply.split(":");
 
-                String[] replyPart = reply.split(":");
+                    int finalVal = Integer.parseInt(replyPart[1]);
 
-                int finalVal = Integer.parseInt(replyPart[1]);
+                    double serverDelay = Double.valueOf(replyPart[0]);
+                    double totalClientDelay = (endTime - startTime) / 1_000_000.0;
+                    double networkDelay = (totalClientDelay - serverDelay);
 
-                double serverDelay = Double.valueOf(replyPart[0]);
-                double totalClientDelay = (endTime - startTime) / 1_000_000.0;
-                double networkDelay = (totalClientDelay - serverDelay);
-
-                System.out.println(username + ":" + hostname + ":" + message);
-                System.out.println("Server Service Execution Time: " + serverDelay);
-                System.out.println("Client Invocation & Response Reception Time: " + totalClientDelay);
-                System.out.println("Network and Middleware Transmission Time: " + networkDelay);
-                System.out.println("Total End-to-End Elapsed Time: " + totalClientDelay);
-                System.out.println(""); // newline
+                    System.out.println(username + ":" + hostname + ":" + message);
+                    System.out.println("Server Service Execution Time: " + serverDelay);
+                    System.out.println("Client Invocation & Response Reception Time: " + totalClientDelay);
+                    System.out.println("Network and Middleware Transmission Time: " + networkDelay);
+                    System.out.println("Total End-to-End Elapsed Time: " + totalClientDelay);
+                    System.out.println(""); // newline
+                }
             }
             scanner.close();
         }
